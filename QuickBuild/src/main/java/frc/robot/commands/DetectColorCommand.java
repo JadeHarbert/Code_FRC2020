@@ -28,22 +28,37 @@ public class DetectColorCommand extends CommandBase {
   }
 
   // Called when the command is initially scheduled.
+  
+
   @Override
   public void initialize() {
-    colorSensorSubsystem.colorMatcher.setConfidenceThreshold(.10);
+   
+    // Turning this off for now so it just uses the default
+    //uniqueColorMatcher.setConfidenceThreshold(.10);
     
+    /**********************************************************************
+    Moving these color adds to the subsystem so they can be defined once
+    and then used by all commands that access the subsystem
+    ***********************************************************************
     colorSensorSubsystem.colorMatcher.addColorMatch(Constants.blueTarget);
     colorSensorSubsystem.colorMatcher.addColorMatch(Constants.greenTarget);
     colorSensorSubsystem.colorMatcher.addColorMatch(Constants.redTarget);
     colorSensorSubsystem.colorMatcher.addColorMatch(Constants.yellowTarget);
+    ************************************************************************/
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    /***********Remove This Line as it creates a new unique instance of ColorMatch *******************
     ColorMatch colorMatcher = new ColorMatch();
+    **************************************************************************************************/
+
     Color detectedColor = colorSensorSubsystem.colorSensor.getColor();
-    ColorMatchResult match = colorMatcher.matchClosestColor(detectedColor);
+    
+    // Edited this line so it now refrences the instance of colorMatch defined in the subsystem
+    ColorMatchResult match = colorSensorSubsystem.colorMatcher.matchClosestColor(detectedColor);
 
     String detectedColors = " ";
     if(match.color == Constants.greenTarget){
@@ -54,9 +69,10 @@ public class DetectColorCommand extends CommandBase {
       detectedColors = "Yellow";
     } else if (match.color == Constants.blueTarget){
       detectedColors = "Blue";
-    } 
+    } else {detectedColors = "I Have No Clue What Color This Is!";}
 
     SmartDashboard.putString("Detected Color:", detectedColors);
+    SmartDashboard.putNumber("Detection Confidence Level:", match.confidence);
 
     
     SmartDashboard.putNumber("Red", detectedColor.red);

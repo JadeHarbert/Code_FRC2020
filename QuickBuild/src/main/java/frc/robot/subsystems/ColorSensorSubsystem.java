@@ -26,6 +26,9 @@ public class ColorSensorSubsystem extends SubsystemBase {
    public ColorMatch colorMatcher = new ColorMatch();
    public Color detectedColor = colorSensor.getColor();
 
+   
+
+   
    /**
     * Run the color match algorithm on our detected color
     */
@@ -34,7 +37,13 @@ public class ColorSensorSubsystem extends SubsystemBase {
 
 
   public ColorSensorSubsystem() {
-     
+
+    //Adds the colors to match against to the instance colorMatcher
+    colorMatcher.addColorMatch(Constants.blueTarget);
+    colorMatcher.addColorMatch(Constants.greenTarget);
+    colorMatcher.addColorMatch(Constants.redTarget);
+    colorMatcher.addColorMatch(Constants.yellowTarget);
+
     
   }
 
