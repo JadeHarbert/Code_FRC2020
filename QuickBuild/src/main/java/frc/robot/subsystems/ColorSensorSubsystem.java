@@ -38,7 +38,8 @@ public class ColorSensorSubsystem extends SubsystemBase {
 
   public ColorSensorSubsystem() {
 
-    //Adds the colors to match against to the instance colorMatcher
+    //Joel added:  Adds the colors to match against to the instance colorMatcher
+    // This way you don't have to include them in each command
     colorMatcher.addColorMatch(Constants.blueTarget);
     colorMatcher.addColorMatch(Constants.greenTarget);
     colorMatcher.addColorMatch(Constants.redTarget);
